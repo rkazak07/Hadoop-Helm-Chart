@@ -1,7 +1,7 @@
 # The base hadoop image to use for all components.
 image:
-  repository: rkazak1/hadoop-3.2.1-nolib
-  tag: latest
+  repository: rkazak1/hadoop
+  tag: 3.2.1-nolib
   pullPolicy: IfNotPresent
 
 # The version of the hadoop libraries being used in the image.
