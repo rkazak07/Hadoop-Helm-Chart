@@ -8,9 +8,9 @@
 ```
 nano values.yaml
 ```
-`
+
 - or
-`
+
 ```
 nano values2.yaml
 ```
