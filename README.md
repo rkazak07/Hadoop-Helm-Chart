@@ -3,6 +3,18 @@
 ## `values.yaml` please revise the file according to your own system. Set the StorageClass, image version, Persistence Volume, Replicas.
 ## Danile/hadoop 3.2.1 was used as the image version. If we want different images, we can use them.
 
+# values.yaml files edited
+
+```
+nano values.yaml
+```
+`
+or
+`
+```
+nano values2.yaml
+```
+
 ## Creating Namespaces
 
 ```
