@@ -1,7 +1,7 @@
-## Helm chart kubernetes Deploy
+# Helm chart kubernetes Deploy
 
-# `values.yaml` please revise the file according to your own system. Set the StorageClass, image version, Persistence Volume, Replicas.
-# Danile/hadoop 3.2.1 was used as the image version. If we want different images, we can use them.
+## `values.yaml` please revise the file according to your own system. Set the StorageClass, image version, Persistence Volume, Replicas.
+## Danile/hadoop 3.2.1 was used as the image version. If we want different images, we can use them.
 
 ## Creating Namespaces
 
