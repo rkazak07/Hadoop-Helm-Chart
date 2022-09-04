@@ -12,6 +12,11 @@ metadata:
 spec:
   serviceName: {{ include "hadoop.fullname" . }}-yarn-rm
   replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "hadoop.name" . }}
+      release: {{ .Release.Name }}
+      component: yarn-rm
   template:
     metadata:
       labels:

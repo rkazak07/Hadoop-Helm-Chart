@@ -1,0 +1,4 @@
+kubectl create ns hadoop
+
+
+helm install hadoop . values.yaml -n hadoop

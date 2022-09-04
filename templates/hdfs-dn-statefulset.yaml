@@ -12,6 +12,11 @@ metadata:
 spec:
   serviceName: {{ include "hadoop.fullname" . }}-hdfs-dn
   replicas: {{ .Values.hdfs.dataNode.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "hadoop.name" . }}
+      release: {{ .Release.Name }}
+      component: hdfs-dn
   template:
     metadata:
       labels:
@@ -54,13 +59,13 @@ spec:
         readinessProbe:
           httpGet:
             path: /
-            port: 9864
+            port: 50075
           initialDelaySeconds: 5
           timeoutSeconds: 2
         livenessProbe:
           httpGet:
             path: /
-            port: 9864
+            port: 50075
           initialDelaySeconds: 10
           timeoutSeconds: 2
         volumeMounts:
