@@ -4,6 +4,7 @@ image:
   tag: 3.2.1-nolib
   pullPolicy: IfNotPresent
 
+
 # The version of the hadoop libraries being used in the image.
 hadoopVersion: 3.2.1
 
