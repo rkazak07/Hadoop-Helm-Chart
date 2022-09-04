@@ -1,5 +1,4 @@
 # The base hadoop image to use for all components.
-# See this repo for image build details: https://github.com/chenseanxy/helm-hadoop-3/tree/master/image
 image:
   repository: chenseanxy/hadoop
   tag: 3.2.1-nolib
