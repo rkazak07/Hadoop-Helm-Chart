@@ -1,12 +1,12 @@
 # The base hadoop image to use for all components.
 image:
   repository: rkazak1/hadoop
-  tag: 3.2.1-nolib
+  tag: 3.3.3-nolib
   pullPolicy: IfNotPresent
 
 
 # The version of the hadoop libraries being used in the image.
-hadoopVersion: 3.2.1
+hadoopVersion: 3.3.3
 
 # Select antiAffinity as either hard or soft, default is soft
 antiAffinity: "soft"
