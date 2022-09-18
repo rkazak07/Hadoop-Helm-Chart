@@ -19,6 +19,11 @@ kubectl create ns hadoop-cls
 
 ## Installing the Chart
 
+Note that you need at least 2GB of free memory per NodeManager pod, if your cluster isn't large enough, not all pods will be scheduled.
+
+The optional calc_resources.sh script is used as a convenience helper to set the yarn.numNodes, and yarn.nodeManager.resources appropriately to utilize all nodes in the Kubernetes cluster and a given percentage of their resources. For example, with a 3 node n1-standard-4 GKE cluster and an argument of 50, this would create 3 NodeManager pods claiming 2 cores and 7.5Gi of memory.
+
+
 ```
 helm install hadoop-cls . -f values.yaml -n hadoop-cls
 ```

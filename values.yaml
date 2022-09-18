@@ -1,19 +1,19 @@
 # The base hadoop image to use for all components.
+# See this repo for image build details: https://github.com/Comcast/kube-yarn/tree/master/image
 image:
-  repository: rkazak1/hadoop
-  tag: 3.3.3-nolib
+  repository: danisla/hadoop
+  tag: 2.9.0
   pullPolicy: IfNotPresent
 
-
 # The version of the hadoop libraries being used in the image.
-hadoopVersion: 3.3.3
+hadoopVersion: 2.9.0
 
 # Select antiAffinity as either hard or soft, default is soft
 antiAffinity: "soft"
 
 hdfs:
   nameNode:
-    pdbMinAvailable: 2
+    pdbMinAvailable: 1
 
     resources:
       requests:
@@ -24,9 +24,9 @@ hdfs:
         cpu: "1000m"
 
   dataNode:
-    replicas: 3
+    replicas: 1
 
-    pdbMinAvailable: 2
+    pdbMinAvailable: 1
 
     resources:
       requests:
@@ -41,7 +41,7 @@ hdfs:
 
 yarn:
   resourceManager:
-    pdbMinAvailable: 2
+    pdbMinAvailable: 1
 
     resources:
       requests:
@@ -52,10 +52,10 @@ yarn:
         cpu: "2000m"
 
   nodeManager:
-    pdbMinAvailable: 2
+    pdbMinAvailable: 1
 
     # The number of YARN NodeManager instances.
-    replicas: 3
+    replicas: 2
 
     # Create statefulsets in parallel (K8S 1.7+)
     parallelCreate: false
@@ -75,10 +75,10 @@ persistence:
     enabled: true
     storageClass: "longhorn"
     accessMode: ReadWriteOnce
-    size: 5Gi
+    size: 20Gi
 
   dataNode:
     enabled: true
     storageClass: "longhorn"
     accessMode: ReadWriteOnce
-    size: 5Gi
+    size: 20Gi

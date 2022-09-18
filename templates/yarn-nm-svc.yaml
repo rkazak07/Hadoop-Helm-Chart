@@ -20,4 +20,4 @@ spec:
   selector:
     app: {{ include "hadoop.name" . }}
     release: {{ .Release.Name }}
-    component: yarn-nm
+    component: yarn-nm	
