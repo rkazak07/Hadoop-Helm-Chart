@@ -4,10 +4,10 @@ kind: Service
 metadata:
   name: {{ include "hadoop.fullname" . }}-yarn-nm
   labels:
-    app: {{ include "hadoop.name" . }}
-    chart: {{ include "hadoop.chart" . }}
-    release: {{ .Release.Name }}
-    component: yarn-nm
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    helm.sh/chart: {{ include "hadoop.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: yarn-nm
 spec:
   ports:
   - port: 8088
@@ -18,6 +18,6 @@ spec:
     name: api
   clusterIP: None
   selector:
-    app: {{ include "hadoop.name" . }}
-    release: {{ .Release.Name }}
-    component: yarn-nm	
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: yarn-nm

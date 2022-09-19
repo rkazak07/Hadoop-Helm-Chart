@@ -5,27 +5,27 @@ metadata:
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/hadoop-configmap.yaml") . | sha256sum }}
   labels:
-    app: {{ include "hadoop.name" . }}
-    chart: {{ include "hadoop.chart" . }}
-    release: {{ .Release.Name }}
-    component: yarn-nm
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    helm.sh/chart: {{ include "hadoop.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: yarn-nm
 spec:
-  serviceName: {{ include "hadoop.fullname" . }}-yarn-nm
-  replicas: {{ .Values.yarn.nodeManager.replicas }}
   selector:
     matchLabels:
-      app: {{ include "hadoop.name" . }}
-      release: {{ .Release.Name }}
-      component: yarn-nm
+      app.kubernetes.io/name: {{ include "hadoop.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: yarn-nm
+  serviceName: {{ include "hadoop.fullname" . }}-yarn-nm
+  replicas: {{ .Values.yarn.nodeManager.replicas }}
 {{- if .Values.yarn.nodeManager.parallelCreate }}
   podManagementPolicy: Parallel
 {{- end }}
   template:
     metadata:
       labels:
-        app: {{ include "hadoop.name" . }}
-        release: {{ .Release.Name }}
-        component: yarn-nm
+        app.kubernetes.io/name: {{ include "hadoop.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: yarn-nm
     spec:
       affinity:
         podAntiAffinity:
@@ -34,9 +34,9 @@ spec:
           - topologyKey: "kubernetes.io/hostname"
             labelSelector:
               matchLabels:
-                app:  {{ include "hadoop.name" . }}
-                release: {{ .Release.Name | quote }}
-                component: yarn-nm
+                app.kubernetes.io/name: {{ include "hadoop.name" . }}
+                app.kubernetes.io/instance: {{ .Release.Name }}
+                app.kubernetes.io/component: yarn-nm
         {{- else if eq .Values.antiAffinity "soft" }}
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 5
@@ -44,9 +44,9 @@ spec:
               topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
-                  app:  {{ include "hadoop.name" . }}
-                  release: {{ .Release.Name | quote }}
-                  component: yarn-nm
+                  app.kubernetes.io/name: {{ include "hadoop.name" . }}
+                  app.kubernetes.io/instance: {{ .Release.Name }}
+                  app.kubernetes.io/component: yarn-nm
         {{- end }}
       terminationGracePeriodSeconds: 0
       containers:

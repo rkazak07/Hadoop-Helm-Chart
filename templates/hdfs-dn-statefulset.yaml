@@ -5,24 +5,24 @@ metadata:
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/hadoop-configmap.yaml") . | sha256sum }}
   labels:
-    app: {{ include "hadoop.name" . }}
-    chart: {{ include "hadoop.chart" . }}
-    release: {{ .Release.Name }}
-    component: hdfs-dn
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    helm.sh/chart: {{ include "hadoop.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: hdfs-dn
 spec:
-  serviceName: {{ include "hadoop.fullname" . }}-hdfs-dn
-  replicas: {{ .Values.hdfs.dataNode.replicas }}
   selector:
     matchLabels:
-      app: {{ include "hadoop.name" . }}
-      release: {{ .Release.Name }}
-      component: hdfs-dn
+      app.kubernetes.io/name: {{ include "hadoop.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: hdfs-dn
+  serviceName: {{ include "hadoop.fullname" . }}-hdfs-dn
+  replicas: {{ .Values.hdfs.dataNode.replicas }}
   template:
     metadata:
       labels:
-        app: {{ include "hadoop.name" . }}
-        release: {{ .Release.Name }}
-        component: hdfs-dn
+        app.kubernetes.io/name: {{ include "hadoop.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: hdfs-dn
     spec:
       affinity:
         podAntiAffinity:
@@ -31,9 +31,9 @@ spec:
           - topologyKey: "kubernetes.io/hostname"
             labelSelector:
               matchLabels:
-                app:  {{ include "hadoop.name" . }}
-                release: {{ .Release.Name | quote }}
-                component: hdfs-dn
+                app.kubernetes.io/name: {{ include "hadoop.name" . }}
+                app.kubernetes.io/instance: {{ .Release.Name }}
+                app.kubernetes.io/component: hdfs-dn
         {{- else if eq .Values.antiAffinity "soft" }}
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 5
@@ -41,9 +41,9 @@ spec:
               topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
-                  app:  {{ include "hadoop.name" . }}
-                  release: {{ .Release.Name | quote }}
-                  component: hdfs-dn
+                  app.kubernetes.io/name: {{ include "hadoop.name" . }}
+                  app.kubernetes.io/instance: {{ .Release.Name }}
+                  app.kubernetes.io/component: hdfs-dn
         {{- end }}
       terminationGracePeriodSeconds: 0
       containers:
@@ -56,18 +56,18 @@ spec:
            - "-d"
         resources:
 {{ toYaml .Values.hdfs.dataNode.resources | indent 10 }}
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 50075
-          initialDelaySeconds: 5
-          timeoutSeconds: 2
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 50075
-          initialDelaySeconds: 10
-          timeoutSeconds: 2
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 9864
+        #   initialDelaySeconds: 60
+        #   timeoutSeconds: 2
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 9864
+        #   initialDelaySeconds: 60
+        #   timeoutSeconds: 2
         volumeMounts:
         - name: hadoop-config
           mountPath: /tmp/hadoop-config
@@ -77,10 +77,29 @@ spec:
       - name: hadoop-config
         configMap:
           name: {{ include "hadoop.fullname" . }}
-      - name: dfs
       {{- if .Values.persistence.dataNode.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ include "hadoop.fullname" . }}-hdfs-dn
+  volumeClaimTemplates:
+  - metadata:
+      name: dfs
+      labels:
+        app.kubernetes.io/name: {{ include "hadoop.name" . }}
+        helm.sh/chart: {{ include "hadoop.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: hdfs-dn
+    spec:
+      accessModes:
+      - {{ .Values.persistence.dataNode.accessMode | quote }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.dataNode.size | quote }}
+    {{- if .Values.persistence.dataNode.storageClass }}
+    {{- if (eq "-" .Values.persistence.dataNode.storageClass) }}
+      storageClassName: ""
+    {{- else }}
+      storageClassName: "{{ .Values.persistence.dataNode.storageClass }}"
+    {{- end }}
+    {{- end }}
       {{- else }}
+      - name: dfs
         emptyDir: {}
       {{- end }}

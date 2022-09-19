@@ -4,14 +4,15 @@ kind: Service
 metadata:
   name: {{ include "hadoop.fullname" . }}-yarn-ui
   labels:
-    app: {{ include "hadoop.name" . }}
-    chart: {{ include "hadoop.chart" . }}
-    release: {{ .Release.Name }}
-    component: yarn-ui
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    helm.sh/chart: {{ include "hadoop.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: yarn-ui
 spec:
   ports:
   - port: 8088
     name: web
   selector:
-    app: {{ include "hadoop.name" . }}
-    component: yarn-rm
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: yarn-rm

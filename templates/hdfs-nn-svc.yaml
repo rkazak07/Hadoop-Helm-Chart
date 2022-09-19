@@ -4,19 +4,19 @@ kind: Service
 metadata:
   name: {{ include "hadoop.fullname" . }}-hdfs-nn
   labels:
-    app: {{ include "hadoop.name" . }}
-    chart: {{ include "hadoop.chart" . }}
-    release: {{ .Release.Name }}
-    component: hdfs-nn
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    helm.sh/chart: {{ include "hadoop.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: hdfs-nn
 spec:
   ports:
   - name: dfs
     port: 9000
     protocol: TCP
   - name: webhdfs
-    port: 50070
+    port: 9870
   clusterIP: None
   selector:
-    app: {{ include "hadoop.name" . }}
-    release: {{ .Release.Name }}
-    component: hdfs-nn
+    app.kubernetes.io/name: {{ include "hadoop.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: hdfs-nn
