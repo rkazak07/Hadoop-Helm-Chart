@@ -1,17 +1,20 @@
 1. You can check the status of HDFS by running this command:
    kubectl exec -n {{ .Release.Namespace }} -it {{ include "hadoop.fullname" . }}-hdfs-nn-0 -- /opt/hadoop/bin/hdfs dfsadmin -report
    
+   
    kubectl exec -n {{ .Release.Namespace }} -it {{ include "hadoop.fullname" . }}-hdfs-nn-0 -- /opt/hadoop/bin/hdfs getconf -namenodes
+
 
 2. To inquire about the status of secondary namenodes
    kubectl exec -n {{ .Release.Namespace }} -it {{ include "hadoop.fullname" . }}-hdfs-nn-0 -- /opt/hadoop/bin/hdfs getconf -secondaryNamenodes
     
+    
 3. For the HDFS file listing and insertion command
    kubectl exec -n {{ .Release.Namespace }} -it {{ include "hadoop.fullname" . }}-hdfs-nn-0 -- /opt/hadoop/bin/hdfs dfs -ls /
    
+   
    kubectl exec -n {{ .Release.Namespace }} -it {{ include "hadoop.fullname" . }}-hdfs-nn-0 -- /opt/hadoop/bin/hdfs dfs -mkdir  /foldername
     
-   
 
 3. You can list the yarn nodes by running this command:
    kubectl exec -n {{ .Release.Namespace }} -it {{ include "hadoop.fullname" . }}-yarn-rm-0 -- /opt/hadoop/bin/yarn node -list
