@@ -76,5 +76,4 @@ The following table lists the configurable parameters of the Hadoop chart and th
 
 - Original K8S Hadoop adaptation this chart was derived from: https://github.com/Comcast/kube-yarn
 - https://github.com/pfisterer/apache-hadoop-helm
-- Chart can use the hadoop config for the hadoop cluster and use the YARN executor: https://github.com/kubernetes/charts/tree/master/stable/zeppelin
 - Image Referance: https://github.com/Comcast/kube-yarn/tree/master/image
