@@ -3,8 +3,9 @@
 
 ## `values.yaml` please revise the file according to your own system. Set the StorageClass, image version, Persistence Volume, Replicas.
 
+-------------------------------------------------------------------------------------------------------------------------------------------
 
-# values.yaml files edited
+## values.yaml files edited
 
 ```
 nano values.yaml
