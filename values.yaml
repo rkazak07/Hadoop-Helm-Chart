@@ -79,12 +79,12 @@ yarn:
 persistence:
   nameNode:
     enabled: true
-    storageClass: longhorn
+    storageClass: "default"
     accessMode: ReadWriteOnce
     size: 50Gi
 
   dataNode:
     enabled: true
-    storageClass: "longhorn"
+    storageClass: "default"
     accessMode: ReadWriteOnce
     size: 200Gi
