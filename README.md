@@ -6,7 +6,7 @@
 
 > `values.yaml` please revise the file according to your own system. Set the StorageClass, image version, Persistence Volume, Replicas.
 
-> Note that you need at least 2GB of free memory per NodeManager pod, if your cluster isn't large enough, not all pods will be scheduled.
+>  that you need at least 2GB of free memory per NodeManager pod, if your cluster isn't large enough, not all pods will be scheduled.
 
 ### Creating Namespaces
 
