@@ -1,42 +1,37 @@
-# Helm chart kubernetes Deploy
+# Hadoop Helm chart  Deploy
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-## `values.yaml` please revise the file according to your own system. Set the StorageClass, image version, Persistence Volume, Replicas.
+### Notes
 
--------------------------------------------------------------------------------------------------------------------------------------------
+> `values.yaml` please revise the file according to your own system. Set the StorageClass, image version, Persistence Volume, Replicas.
+> Note that you need at least 2GB of free memory per NodeManager pod, if your cluster isn't large enough, not all pods will be scheduled.
 
-## values.yaml files edited
-
-```
-nano values.yaml
-```
-
-
-## Creating Namespaces
+### Creating Namespaces
 
 ```
 kubectl create ns hadoop-cls
 ```
 
-## Installing the Chart
 
-Note that you need at least 2GB of free memory per NodeManager pod, if your cluster isn't large enough, not all pods will be scheduled.
-
-The optional `calc_resources.sh` script is used as a convenience helper to set the yarn.numNodes, and yarn.nodeManager.resources appropriately to utilize all nodes in the Kubernetes cluster and a given percentage of their resources. For example, with a 3 node n1-standard-4 GKE cluster and an argument of 50, this would create 3 NodeManager pods claiming 2 cores and 7.5Gi of memory.
-
+### Installing the Chart
 
 ```
-helm install hadoop-cls . -f values.yaml -n hadoop-cls
+helm install my-release . -f values.yaml -n hadoop-cls
 ```
+
 
 ## Upgrade the Chart
 
 ```
-helm upgrade --install hadoop-cls . -f values.yaml -n hadoop-cls
+helm upgrade --install my-release . -f values.yaml -n hadoop-cls
 ```
 
+
+## Delete the Chart
+
 ```
-kubectl get all
+helm delete -n hadoop-cls my-release
 ```
 
 
@@ -68,7 +63,7 @@ The following table lists the configurable parameters of the Hadoop chart and th
 | `persistence.nameNode.accessMode`      | Access mode for the volume                                     | `ReadWriteOnce`                                                   |
 | `persistence.nameNode.size`            | Size of the volume                                             | `50Gi`                                                            |
 | `persistence.dataNode.enabled`         | Enable/disable persistent volume                               | `false`                                                           |
-| `persistence.dataNode.storageClass`    | Name of the StorageClass to use per your volume provider       | `longhorn`                                                               |
+| `persistence.dataNode.storageClass`    | Name of the StorageClass to use per your volume provider       | `-`                                                               |
 | `persistence.dataNode.accessMode`      | Access mode for the volume                                     | `ReadWriteOnce`                                                   |
 | `persistence.dataNode.size`            | Size of the volume                                             | `200Gi`                                                           |
 
